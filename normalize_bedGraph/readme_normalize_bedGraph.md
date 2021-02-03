@@ -1,7 +1,7 @@
 
 ## normalize_bedGraph
 
-You can run the normalize_bedGraph script as follows:
+You can run the *normalize_bedGraph* script as follows:
 ```
 perl normalize_bedGraph [factor] [multiply|divide] [bedGraph file 1] [bedGraph file 2] ... [bedGraph file N]
 ```
