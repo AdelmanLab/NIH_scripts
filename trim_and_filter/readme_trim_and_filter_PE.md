@@ -28,5 +28,5 @@ region & minimum average base quality score used for filtering.  The file name f
 ```
 A file describing how many read pairs failed the filter (& why) will be written to:
 ```
-  *<OutputNameRoot>.mate1_<Mate1_Pos1>_<Mate1_PosN>.mate2_<Mate2_Pos1>_<Mate2_PosN>.minQS_<MinimumAvgBQS>.FilterStats.txt*
+  <OutputNameRoot>.mate1_<Mate1_Pos1>_<Mate1_PosN>.mate2_<Mate2_Pos1>_<Mate2_PosN>.minQS_<MinimumAvgBQS>.FilterStats.txt
 ```
