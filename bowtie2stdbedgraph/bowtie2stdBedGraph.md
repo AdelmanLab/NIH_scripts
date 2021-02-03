@@ -14,7 +14,7 @@ perl bowtie2stdbedgraph.pl [options] [input file name] [desired track name]
 #### Options:
 ```
 Options:
--o	Desired output files.  The program will always produce two files containing the 
+-o  Desired output files.  The program will always produce two files containing the 
     number of aligned reads on each strand.  Additional files are requested through 
     the use of this option with an argument specifying the file type.  Acceptable 
     arguments are “n”, specifying normalized files, “b”, specifying binned files, 
@@ -24,17 +24,17 @@ Options:
     If desired, commas may be used between the characters requesting different file 
     types, which may make the command more readable:  -o n,b,m.
     
--b	Desired bin size.  This option requires that binned output files be requested 
+-b  Desired bin size.  This option requires that binned output files be requested 
     through the use of the -o b or -o v option.  The specified bin size may be any 
     number greater than one.  If the bin size is not specified, the default value of
     25 will be used.  Example:  -b 50.
     
--s	Desired shift value.  This option requires that a merged output file be requested
+-s  Desired shift value.  This option requires that a merged output file be requested
     through the use of the -o m or -o v option.  The specified shift value may be any
     number greater than zero.  If the shift value is not specified, the default value
     of 75 will be used.  Example:  -s 100.
     
--l	Specify chromosome length list file. This option requires that a merged output 
+-l  Specify chromosome length list file. This option requires that a merged output 
     file be requested through the use of the -o b,  -o m, or -o v option.  The lengths 
     specified by the file will be used to prevent aligned reads from being shifted 
     beyond any chromosome’s 3’ end.  These reads will instead be included in the last 
@@ -42,28 +42,28 @@ Options:
     first containing chromosome names, and the second, corresponding chromosome 
     lengths. Example:  -l hg19_chr_size
     
--r	Specify reference genome.  This option requires that a binned or merged output file
+-r  Specify reference genome.  This option requires that a binned or merged output file
     be requested through the use of the -o b, -o m, or -o v option.  This option may be 
     used as an alternative to specifying a chromosome length list file (-l), and will 
     automatically fetch the list of chromosomes and lengths from UCSC.  Example -r hg19
     
--t	Trim value.  If sequences were trimmed for quality prior to alignment, this option 
+-t  Trim value.  If sequences were trimmed for quality prior to alignment, this option 
     may be used to specify the number of nucleotides trimmed, and shift the 5’ positions
     of the output accordingly.  If sequences were trimmed to remove non-genomic 
     sequence, this option should not be used.  Example:  -t 5.
     
--x	Swap stranded output files.  This option causes all alignments to the forward 
+-x  Swap stranded output files.  This option causes all alignments to the forward 
     strand to be placed in the _reverse.bedgraph output file, and all alignments to 
     the reverse strand to be placed in the _forward.bedgraph file.  Use of this option
     ensures 3’ RNA alignments are associated with the correct strand.
     
--D	Disable fixing of chromosome names.  By default, “chr” is appended to all 
+-D  Disable fixing of chromosome names.  By default, “chr” is appended to all 
     chromosome names lacking that prefix, and any chromosome matching “mit” is replaced
     with “chrM”.  This is intended to improve compatibility with the UCSC browser when
     alignments are performed utilizing an index with bare numbers for chromosome names,
     such as the default fly genome.  Setting this option disables that behavior.
     
--M	Specify the search string utilized to identify the mitochondrial genome.  By 
+-M  Specify the search string utilized to identify the mitochondrial genome.  By 
     default, any chromosome matching “mit” is replaced with “chrM”, the user may 
     provide a suitable alternative.
 ```
