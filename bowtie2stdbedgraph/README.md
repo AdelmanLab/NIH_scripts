@@ -6,6 +6,8 @@ Within this folder are included text files for chromosome sizes (dm3_chr_size.tx
 
 Given a bowtie output file, the program produces a pair of bedgraph files containing the number of alignments per location, per strand.  The program will optionally produce paired files containing counts normalized to millions of total aligned reads and binned alignment counts.  Additionally, a single output file may be requested that contains the counts of both strands which have been shifted downstream, binned, and merged by summing the counts of corresponding locations  (as for ChIP-seq).
 
+The output file produced is in standard bedGraph format, with 0-based start coordinate and 1-based end coordinate
+
 The program is run with the following UNIX command line statement:
 ```
 perl bowtie2stdbedgraph.pl [options] [input file name] [desired track name]
@@ -14,7 +16,15 @@ perl bowtie2stdbedgraph.pl [options] [input file name] [desired track name]
 #### Options:
 ```
 Options:
--o  Desired output files. The program will always produce two files containing the 
+-p  Indicate input file is the result of a paired-end alignment. By default, the output
+    produced will describe counts of End1 read 5' mapping locations, to instead report
+    the 5' mapping location of End2 reads, while swapping strand identifiers, use
+    the -x option (e.g. for startRNA, the 5prRNA file is produced by default, to
+    automatically generate the 3prRNA file, use -x along with paired-end input)
+
+-a  Indicate input is in SAM format (sorted by query name)
+
+-o  [nbmv] Desired output files. The program will always produce two files containing the 
     number of aligned reads on each strand. Additional files are requested through 
     the use of this option with an argument specifying the file type. Acceptable 
     arguments are “n”, specifying normalized files, “b”, specifying binned files, 
@@ -23,18 +33,18 @@ Options:
     of a single string (single word) with no whitespace, for example: -o nb or -o nm.
     If desired, commas may be used between the characters requesting different file 
     types, which may make the command more readable:  -o n,b,m.
-    
--b  Desired bin size. This option requires that binned output files be requested 
+
+-b  [integer>=1] Desired bin size. This option requires that binned output files be requested 
     through the use of the -o b or -o v option. The specified bin size may be any 
     number greater than one. If the bin size is not specified, the default value of
     25 will be used. Example:  -b 50.
     
--s  Desired shift value. This option requires that a merged output file be requested
+-s  [integer>=0] Desired shift value. This option requires that a merged output file be requested
     through the use of the -o m or -o v option. The specified shift value may be any
     number greater than zero. If the shift value is not specified, the default value
     of 75 will be used. Example:  -s 100.
     
--l  Specify chromosome length list file. This option requires that a merged output 
+-l  [string] Specify chromosome length list file. This option requires that a merged output 
     file be requested through the use of the -o b,  -o m, or -o v option. The lengths 
     specified by the file will be used to prevent aligned reads from being shifted 
     beyond any chromosome’s 3’ end. These reads will instead be included in the last 
@@ -42,12 +52,12 @@ Options:
     first containing chromosome names, and the second, corresponding chromosome 
     lengths. Example:  -l hg19_chr_size
     
--r  Specify reference genome. This option requires that a binned or merged output file
+-r  [string] Specify reference genome. This option requires that a binned or merged output file
     be requested through the use of the -o b, -o m, or -o v option. This option may be 
     used as an alternative to specifying a chromosome length list file (-l), and will 
     automatically fetch the list of chromosomes and lengths from UCSC. Example -r hg19
     
--t  Trim value. If sequences were trimmed for quality prior to alignment, this option 
+-t  [integer>=1] Trim value. If sequences were trimmed for quality prior to alignment, this option 
     may be used to specify the number of nucleotides trimmed, and shift the 5’ positions
     of the output accordingly. If sequences were trimmed to remove non-genomic 
     sequence, this option should not be used. Example:  -t 5.
@@ -63,9 +73,24 @@ Options:
     alignments are performed utilizing an index with bare numbers for chromosome names,
     such as the default fly genome. Setting this option disables that behavior.
     
--M  Specify the search string utilized to identify the mitochondrial genome. By 
+-M  [string] Specify the search string utilized to identify the mitochondrial genome. By 
     default, any chromosome matching “mit” is replaced with “chrM”, the user may 
     provide a suitable alternative.
+
+-u  [integer>=1] Remove duplicate reads exceeding specified maximum to retain per
+    position. Using -u 1 results in true removal of all duplicates, a higher value,
+    -u N, results in the retention of up to N copies. For paired end input, two read 
+    pairs are considered duplicates if the 5' mapping locations of both End 1 and End 2
+    are identical, for single-end input, reads with the same 5' mapping position are
+    considered duplicates. For paired end input, de-duplication is performed in a 
+    strand-specific manner by default, i.e. two pairs aligned such that the End 1 5' 
+    position of the first is the same as the End 2 5' position of the second with a similar
+    relationship between the End 2 5' position of the first and the End 1 5' position of
+    the second, will not be considered duplicates
+
+-i  Perform de-duplication in a strand-independent manner, requires paired-end input (-p).
+    With this option, in the example described above (in the description of option -u),
+    the two pairs would be considered duplicates
 ```
 
 #### Input File Name:
