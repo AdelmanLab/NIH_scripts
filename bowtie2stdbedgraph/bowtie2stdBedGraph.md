@@ -90,8 +90,8 @@ The track name will be included in the header of each file.  The information app
 perl bowtie2stdbedgraph.pl bowtie_file fake_track
 ```
 Produces two files named bowtie_file_forward.bedgraph and bowtie_file_reverse.bedgraph with respective track names fake_track_forward and fake_track_reverse.
+  
 
--
 ```
 perl bowtie2bedgraph.pl –o n bowtie_file fake_track
 ```
