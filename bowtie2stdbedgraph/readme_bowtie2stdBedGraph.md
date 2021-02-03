@@ -87,33 +87,28 @@ The track name will be included in the header of each file.  The information app
 
 #### Sample Commands:
 ```
-
 perl bowtie2stdbedgraph.pl bowtie_file fake_track
 ```
 Produces two files named bowtie_file_forward.bedgraph and bowtie_file_reverse.bedgraph with respective track names fake_track_forward and fake_track_reverse.
   
 
 ```
-
 perl bowtie2bedgraph.pl –o n bowtie_file fake_track
 ```
 Produces four files:  the two described above, bowtie_file_forward_normal.bedgraph, and bowtie_file_reverse_normal.bedgraph.  The corresponding track names are fake_track_forward_normal and fake_track_reverse_normal.  
   
 
 ```
-
 perl bowtie2stdbedgraph.pl -o nbm -b 50 -s 100 bowtie_file fake_track
 ```
 Produces seven files:  the four described above, bowtie_file_forward_binned.bedgraph, bowtie_file_reverse_binned.bedgraph, and bowtie_file_merged.bedgraph.  The corresponding track names are fake_track_forward_binned, fake_track_reverse_binned, and fake_track_merged.
 
 ```
-
 perl bowtie2stdbedgraph.pl -o nbm -b 50 -s 100 -l fake_lengths bowtie_file fake_track
 ```
 Produces the seven files listed above.  If any aligned read is shifted beyond a chromosome’s 3’ end, as specified by the fake_lengths file, it will be included in the last valid bin. 
 
 ```
-
 perl bowtie2stdbedgraph.pl -t 5 bowtie_file fake_track
 ```
 Produces the two files from the first example, but the position values will be shifted by 5 in the negative direction for the forward strand, and shifted by 5 in the positive direction for the reverse strand.
