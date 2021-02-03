@@ -23,53 +23,6 @@ make_heatmap [options] -p [plus strand hit file] -m [minus strand hit file] [gen
 ```
 This form is for use with hit file types that do not include strand information, especially in cases where such information is required by the selected options.
 
-## Examples
-
-Making matrix for ChIP-seq data around TSS:
-```
-scriptsPath='/n/data1/hms/bcmp/adelman/Scripts/make_heatmap' #use this to enter the path to the directory containing the make_heatmap script
-
-#For ChIP-seq bedgraph file "your_chipseq_data.bedGraph" and TSS anotations "tss_locations_for_make_heatmap.txt"
-#Make matrix starting 2000bp upstream of TSS using 50bp bins extending 2000bp downstream of the TSS (80 bins in total)
-
-#This will give the per nt mean value per bin (-v c)
-${scriptsPath}/make_heatmap -s b -b c -t 5 -a u -v c -- your_chipseq_data.bedGraph tss_locations_for_make_heatmap.txt make_heatmap_output.txt -2000 50 80
-
-#This option will give the sum of the values in each bin (be careful if your bedgraph data is binned and/or represents whole read coverage)
-${scriptsPath}/make_heatmap -s b -b c -t 5 -a u -- your_chipseq_data.bedGraph tss_locations_for_make_heatmap.txt make_heatmap_output.txt -2000 50 80
-```
-
-Making matrix for stranded (eg PRO-seq) data around TSS:
-```
-scriptsPath='/n/data1/hms/bcmp/adelman/Scripts/make_heatmap' #use this to enter the path to the directory containing the make_heatmap script
-
-#For stranded PRO-seq bedgraph files "your_proseq_data_F.bedGraph" and "your_proseq_data_R.bedGraph" 
-#and TSS anotations "tss_locations_for_make_heatmap.txt"
-#Make matrix starting 2000bp upstream of TSS using 50bp bins extending 2000bp downstream of the TSS (80 bins in total)
-
-#This will give the sense sum of values in each bin, use the -v c option if you want the per nt mean for each bin
-${scriptsPath}/make_heatmap -s s -b c -t 5 -a u -p your_proseq_data_F.bedGraph -m your_proseq_data_R.bedGraph -- tss_locations_for_make_heatmap.txt make_heatmap_output_sense.txt -2000 50 80
-
-#This will give the antisense sum of values in each bin, use the -v c option if you want the per nt mean for each bin
-${scriptsPath}/make_heatmap -s o -b c -t 5 -a u -p your_proseq_data_F.bedGraph -m your_proseq_data_R.bedGraph -- tss_locations_for_make_heatmap.txt make_heatmap_output_sense.txt -2000 50 80
-```
-
-Counting values for stranded (eg PRO-seq) data in single bin around TSS:
-```
-scriptsPath='/n/data1/hms/bcmp/adelman/Scripts/make_heatmap' #use this to enter the path to the directory containing the make_heatmap script
-
-#For stranded PRO-seq bedgraph files "your_proseq_data_F.bedGraph" and "your_proseq_data_R.bedGraph" 
-#and TSS anotations "tss_locations_for_make_heatmap.txt"
-#Count values in bin starting at the TSS and extending 500bp downstream
-
-#This will give the sum of sense values, use the -v c option if you want the per nt mean for each bin
-${scriptsPath}/make_heatmap -s s -b c -t 5 -a u -p your_proseq_data_F.bedGraph -m your_proseq_data_R.bedGraph -- tss_locations_for_make_heatmap.txt make_heatmap_output_sense.txt 0 500 1
-
-#This will give sum of antisense values, use the -v c option if you want the per nt mean for each bin
-${scriptsPath}/make_heatmap -s o -b c -t 5 -a u -p your_proseq_data_F.bedGraph -m your_proseq_data_R.bedGraph -- tss_locations_for_make_heatmap.txt make_heatmap_output_sense.txt 0 500 1
-```
-
-
 
 ## Options:
 
@@ -180,6 +133,10 @@ g++ -O3 -o make_heatmap make_heatmap.cpp -lpthread
 To compile on Mac OS X 10.9 or newer, use:
 ```
 g++ -O3  -o make_heatmap make_heatmap.cpp -stdlib=libstdc++ -lpthread
+```
+To compile on Mac OS X 10.14 or newer, use:
+```
+g++ -O3  -o make_heatmap make_heatmap_OSX.cpp -stdlib=libstdc++
 ```
 On systems with no support for pthreads, a single-threaded version may be built using:
 ```
