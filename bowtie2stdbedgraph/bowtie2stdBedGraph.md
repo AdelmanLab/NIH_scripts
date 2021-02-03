@@ -95,8 +95,8 @@ Produces two files named bowtie_file_forward.bedgraph and bowtie_file_reverse.be
 ```
 perl bowtie2bedgraph.pl –o n bowtie_file fake_track
 ```
-Produces four files:  the two described above, bowtie_file_forward_normal.bedgraph, and bowtie_file_reverse_normal.bedgraph.  The corresponding track names are fake_track_forward_normal and fake_track_reverse_normal.
-&nbsp;  
+Produces four files:  the two described above, bowtie_file_forward_normal.bedgraph, and bowtie_file_reverse_normal.bedgraph.  The corresponding track names are fake_track_forward_normal and fake_track_reverse_normal.  
+ 
 
 ```
 perl bowtie2stdbedgraph.pl -o nbm -b 50 -s 100 bowtie_file fake_track
