@@ -1,0 +1,49 @@
+#!/usr/bin/perl
+
+$outname=$ARGV[0] || die "Error: output file name prefix must be specified\nUsage: bedgraphs2stdBedGraph [output prefix]\n";
+
+open(LOG,">${outname}.log");
+$time=localtime();
+@bgs=<*.bedgraph>;
+@bGs=<*.bedGraph>;
+for($i=0;$i<scalar(@bgs);$i++) {
+	push(@vals,1);
+}
+for($i=0;$i<scalar(@bGs);$i++) {
+	push(@vals,0);
+}
+push(@bgs,@bGs);
+$i=0;
+$count=scalar(@bgs);
+print LOG "Initiated $time\n\nMerged $count bedgraphs:\n\n";
+foreach $file(@bgs) {
+	print LOG "$file\n";
+	open(IN,$file);
+	while(<IN>) {
+		next if $_=~/track|^$/;
+		@F=split(/\s+/,$_);
+		$F[1]-=$vals[$i];
+		$table{$F[0]}={} if !exists($table{$F[0]});
+		$table{$F[0]}->{$F[2]}=[$F[1],0] if !exists($table{$F[0]}->{$F[2]});
+		if($table{$F[0]}->{$F[2]}->[0]==$F[1]) {
+			$table{$F[0]}->{$F[2]}->[1]+=$F[3];
+		}
+		else {
+			print LOG "\nError: \"$file\" contains interval that does not align with previous files:\n$_";
+			die "Error: \"$file\" contains interval that does not align with previous files:\n$_";
+		}
+	}
+	$i++;
+	close(IN);
+}
+open(OUT,">${outname}.bedGraph");
+print OUT "track type=bedGraph name=\"$outname Merged $count bedgraphs\" description=\"$outname\" visibility=full color=179,27,27 altColor=179,27,27\n\n";
+foreach $chr(sort {$a cmp $b} keys(%table)) {
+	@sorted=sort {$a <=> $b} keys(%{$table{$chr}});
+	foreach(@sorted) {
+		print OUT "$chr\t$table{$chr}->{$_}->[0]\t$_\t$table{$chr}->{$_}->[1]\n";
+	}
+}
+
+close(LOG);
+close(OUT);

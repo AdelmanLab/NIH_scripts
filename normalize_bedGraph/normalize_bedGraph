@@ -1,0 +1,48 @@
+#!/usr/bin/perl
+
+$factor=$ARGV[0] || die "Error: normalization factor must be specified\nUsage: normalize_bedGraph [factor] [multiply|divide] [bedGraph file 1]\n         [bedGraph file 2] ... [bedGraph file N]\n";
+$method=$ARGV[1] || die "Error: method of applying normalization factor must be specified\nUsage: normalize_bedGraph [factor] [multiply|divide] [bedGraph file 1]\n         [bedGraph file 2] ... [bedGraph file N]\n";
+
+if($method eq "multiply") {
+	$abbrev="M";
+}
+elsif($method eq "divide") {
+	$abbrev="D";
+}
+else {
+	die "Error: method of applying normalization factor must be \"multiply\" or \"divide\"\nUsage: normalize_bedGraph [factor] [multiply|divide] [bedGraph file 1]\n         [bedGraph file 2] ... [bedGraph file N]\n";
+}
+
+if(scalar(@ARGV)<3) {
+	die "Error: one or more bedGraph files must be specified\nUsage: normalize_bedGraph [factor] [multiply|divide] [bedGraph file 1]\n         [bedGraph file 2] ... [bedGraph file N]\n";
+}
+
+die "Error: normalization factor must be numeric\nUsage: normalize_bedGraph [factor] [multiply|divide] [bedGraph file 1]\n         [bedGraph file 2] ... [bedGraph file N]\n" if $factor!~/^(\d+)?(\.\d+)?$/;
+
+for($i=2;$i<scalar(@ARGV);$i++) {
+	open(IN,$ARGV[$i]) || die "Error: could not open bedGraph file \"$ARGV[$i]\"\n";
+	if($ARGV[$i]=~/(.*)(bedgraph)$/i) {
+		$out=sprintf("%s_norm%s%.02f\.%s",$1,$abbrev,$factor,$2);
+	}
+	else {
+		$out=sprintf("%s_norm%s%.02f",$ARGV[$i],$abbrev,$factor);
+	}
+	open(OUT,">$out") || die "Error: could not create normalized bedGraph file \"$out\"\n";
+	while(<IN>) {
+		if($_=~/track|^$/) {
+			print OUT $_;
+		}
+		else {
+			chomp;
+			@F=split(/\t/,$_);
+			if($method eq "multiply") {
+				$F[3]*=$factor;
+			}
+			else {
+				$F[3]/=$factor;
+			}
+			print OUT "$F[0]\t$F[1]\t$F[2]\t$F[3]\n";
+		}
+	}
+	close(OUT);
+}
