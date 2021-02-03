@@ -22,8 +22,11 @@ Other parameters:
 Output:
 A new ~.fastq file will be generated for each mate.  The file name will include the retained
 region & minimum average base quality score used for filtering.  The file name format is:
-  *<OutputNameRoot>.1.trim_<Mate1_Pos1>_<Mate1_PosN>.minQS_<MinimumAvgBQS>.fastq*
-  *<OutputNameRoot>.2.trim_<Mate2_Pos1>_<Mate2_PosN>.minQS_<MinimumAvgBQS>.fastq*
-  
+```
+  <OutputNameRoot>.1.trim_<Mate1_Pos1>_<Mate1_PosN>.minQS_<MinimumAvgBQS>.fastq
+  <OutputNameRoot>.2.trim_<Mate2_Pos1>_<Mate2_PosN>.minQS_<MinimumAvgBQS>.fastq
+```
 A file describing how many read pairs failed the filter (& why) will be written to:
+```
   *<OutputNameRoot>.mate1_<Mate1_Pos1>_<Mate1_PosN>.mate2_<Mate2_Pos1>_<Mate2_PosN>.minQS_<MinimumAvgBQS>.FilterStats.txt*
+```
