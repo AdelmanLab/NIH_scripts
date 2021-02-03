@@ -1,17 +1,17 @@
-##Bowtie2stdBedGraph
+## Bowtie2stdBedGraph
 
 Within this folder are included text files for chromosome sizes (dm3_chr_size.txt, hg19_chr_size.txt, mm9_chr_size.txt). These can be used with bowtie2stdBedgraph to make sure the bedGraph files do not include bins that extend past the end of a chromosome, thus generating an error when uploaded to UCSC.
 
 ### Usage: bowtie2stdbedgraph.pl
 
-Given a bowtie output file, the program produces a pair of bedgraph files containing the number of alignments per location, per strand.  The program will optionally produce paired files containing counts normalized to millions of total aligned reads and binned alignment counts.  Additionally, a single output file may be requested that contains the counts of both strands which have been shifted downstream, binned, and merged by summing the counts of corresponding locations  (as for ChiP-seq).
+Given a bowtie output file, the program produces a pair of bedgraph files containing the number of alignments per location, per strand.  The program will optionally produce paired files containing counts normalized to millions of total aligned reads and binned alignment counts.  Additionally, a single output file may be requested that contains the counts of both strands which have been shifted downstream, binned, and merged by summing the counts of corresponding locations  (as for ChIP-seq).
 
 The program is run with the following UNIX command line statement:
 ```
 perl bowtie2stdbedgraph.pl [options] [input file name] [desired track name]
 ```
 
-Options:
+#### Options:
 ```
 Options:
 -o	Desired output files.  The program will always produce two files containing the 
@@ -68,7 +68,7 @@ Options:
     provide a suitable alternative.
 ```
 
-####Input File Name:
+#### Input File Name:
 In addition to specifying the file to use as input, this file name is used as the prototype name for all output files.  These files will include the original file name, with additional information appended indicating the files’ contents, preceded by an underscore.  The appended information is as follows:
 ```
 _forward		  Number of aligned reads, forward strand
@@ -82,10 +82,10 @@ _merged		      Number of aligned reads per shifted, merged, bin
 
 All output files will also have appended to them the extension .bedgraph.
 
-####Desired Track Name:
+#### Desired Track Name:
 The track name will be included in the header of each file.  The information appended to the name of each file will be appended to each track name as well.
 
-####Sample Commands:
+#### Sample Commands:
 ```
 perl bowtie2stdbedgraph.pl bowtie_file fake_track```
 Produces two files named bowtie_file_forward.bedgraph and bowtie_file_reverse.bedgraph with respective track names fake_track_forward and fake_track_reverse.
