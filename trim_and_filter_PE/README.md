@@ -1,5 +1,7 @@
 ## trim_and_filter_PE
 
+This script is designed to enable trimming of sequencing reads to a given length prior to mapping, and for selecting reads above a user defined average base quality score. 
+
 Usage:
 ```
 Syntax  = ./trim_and_filter_PE.pl [-h] -1 <Mate1_fastq> -2 <Mate2_fastq> -a <Mate1_Pos1> -b <Mate1_PosN> -c <Mate2_Pos1> -d <Mate2_PosN> -m <MinimumAvgBQS> -q <BaseQualScale> -o <OutputNameRoot>
