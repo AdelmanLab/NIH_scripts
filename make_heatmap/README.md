@@ -130,11 +130,7 @@ This program was originally developed for Red Hat Enterprise Linux Server releas
 ```
 g++ -O3 -o make_heatmap make_heatmap.cpp -lpthread
 ```
-To compile on Mac OS X 10.9 or newer, use:
-```
-g++ -O3  -o make_heatmap make_heatmap.cpp -stdlib=libstdc++ -lpthread
-```
-To compile on Mac OS X 10.14 or newer, use:
+To compile on Mac OS X use:
 ```
 g++ -O3  -o make_heatmap make_heatmap_OSX.cpp -stdlib=libstdc++
 ```
