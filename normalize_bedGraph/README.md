@@ -11,6 +11,6 @@ perl normalize_bedGraph [factor] [multiply|divide] [bedGraph file 1] [bedGraph f
 Here is a specific example:
  
 ```
-perl normalize_bedGraph 1.3222567 multiply Dm_S2_Start-seq_Mock-tr_A_5prRNA_forward.bedGraph Dm_S2_Start-seq_Mock-tr_A_5prRNA_reverse.bedGraph
+perl normalize_bedGraph 0.85867 multiply Dm_S2_PRO-seq_F.bedGraph Dm_S2_PRO-seq_R.bedGraph
 ```
-This generates two files named Dm_S2_Start-seq_Mock-tr_A_5prRNA_forward_normM1.32.bedGraph and Dm_S2_Start-seq_Mock-tr_A_5prRNA_reverse_normM1.32.bedGraph.
+This generates two files named Dm_S2_PRO-seq_F_normM0.86.bedGraph and Dm_S2_PRO-seq_R_normM0.86.bedGraph.
