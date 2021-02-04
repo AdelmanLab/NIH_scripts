@@ -1,6 +1,8 @@
 
 ## normalize_bedGraph
 
+This script allows a user to normalize a bedGraph file by any desired value. This normalization factor is appended to the new file name for documentation purposes. 
+
 You can run the *normalize_bedGraph* script as follows:
 ```
 perl normalize_bedGraph [factor] [multiply|divide] [bedGraph file 1] [bedGraph file 2] ... [bedGraph file N]
