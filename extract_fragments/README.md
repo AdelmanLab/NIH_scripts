@@ -2,7 +2,7 @@
 
 Within this folder are included text files for chromosome sizes (*dm3_chr_size.txt*, *hg19_chr_size.txt*, *hg38_chr_size.txt*, *mm9_chr_size.txt*, *mm10_chr_size.txt*). These can be used with extract_fragments.pl to make sure the bedGraph files do not include bins that extend past the end of a chromosome, thus generating an error when uploaded to UCSC.
 
-### Usage: bowtie2stdbedgraph.pl
+### Usage: extract_fragments.pl
 
 Given a paired end bowtie output file, the program produces a BED file, a standard bedGraph file, or both, which contain those fragments that fall between a user-specified minimum and maximum length.  The BED file contains an entry for every fragment found, while the bedGraph file contains the count of fragment centers falling in bins of user specified length.
 
